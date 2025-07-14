@@ -1,27 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
+import React, { ReactNode } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 interface PageTransitionProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (pageRef.current) {
-      gsap.fromTo(pageRef.current, 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }
-      );
-    }
-  }, [children]);
+  const location = useLocation();
 
   const pageVariants = {
     initial: {
       opacity: 0,
-      y: 20,
+      y: 50,
       scale: 0.98
     },
     in: {
@@ -31,23 +22,31 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
     },
     out: {
       opacity: 0,
-      y: -20,
+      y: -50,
       scale: 1.02
     }
   };
 
+  const pageTransition = {
+    type: 'tween' as const,
+    ease: [0.4, 0, 0.2, 1] as const,
+    duration: 0.6
+  };
+
   return (
-    <motion.div
-      ref={pageRef}
-      initial="initial"
-      animate="in"
-      exit="out"
-      variants={pageVariants}
-      transition={{ duration: 0.4 }}
-      className="min-h-screen w-full"
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+        className="w-full"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

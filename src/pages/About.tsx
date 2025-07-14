@@ -252,7 +252,7 @@ const About: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden pt-24">
+    <div className="min-h-screen relative overflow-hidden">
       {/* Animated Background */}
       <div ref={bgRef} className="fixed inset-0 -z-10">
         {/* Gradient Background */}
@@ -285,7 +285,7 @@ const About: React.FC = () => {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-48 pb-12" style={{ marginTop: '120px' }}>
         {/* Header */}
         <div ref={heroRef} className="text-center mb-24">
           <motion.div

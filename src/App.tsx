@@ -27,9 +27,7 @@ function AnimatedRoutes() {
           path="/dashboard" 
           element={
             <PageTransition>
-              <div className="pt-24">
-                <Dashboard />
-              </div>
+              <Dashboard />
             </PageTransition>
           } 
         />
@@ -37,9 +35,7 @@ function AnimatedRoutes() {
           path="/about" 
           element={
             <PageTransition>
-              <div className="pt-24">
-                <About />
-              </div>
+              <About />
             </PageTransition>
           } 
         />

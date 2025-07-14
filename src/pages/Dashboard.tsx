@@ -234,7 +234,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 pt-24">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Animated Background */}
       <div ref={bgRef} className="fixed inset-0 -z-10 pointer-events-none">
         {/* Animated Circles */}
@@ -261,7 +261,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-48 pb-12" style={{ marginTop: '120px' }}>
         {/* Header Section */}
         <div ref={headerRef} className="mb-16">
           <motion.div

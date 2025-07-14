@@ -16,6 +16,15 @@ const Header: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Smooth scroll to top on navigation
+  const handleNavClick = () => {
+    // Use a more aggressive scroll to top
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 50);
+    setIsMenuOpen(false);
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Header scroll animation
@@ -91,7 +100,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" onClick={handleNavClick} className="flex items-center space-x-3 group">
             <div 
               ref={logoRef}
               className="relative bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105"
@@ -115,6 +124,7 @@ const Header: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={handleNavClick}
                 className={`relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 overflow-hidden group ${
                   isActive(item.path) 
                     ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg' 
@@ -159,7 +169,7 @@ const Header: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={handleNavClick}
                 className={`relative px-6 py-4 rounded-xl text-sm font-bold transition-all duration-300 transform ${
                   isActive(item.path) 
                     ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg scale-105' 

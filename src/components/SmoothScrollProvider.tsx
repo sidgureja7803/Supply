@@ -11,15 +11,15 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis with optimized configuration
+    // Initialize Lenis with ultra-smooth configuration
     const lenis = new Lenis({
-      duration: 1.8,
-      easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // exponential ease out
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.2,
-      touchMultiplier: 2,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 2.0,
       infinite: false,
       autoResize: true,
       syncTouch: false,
@@ -30,9 +30,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
     lenisRef.current = lenis;
 
     // Update ScrollTrigger on Lenis scroll
-    lenis.on('scroll', (data) => {
-      ScrollTrigger.update();
-    });
+    lenis.on('scroll', ScrollTrigger.update);
 
     // Animation frame function for smooth rendering
     function raf(time: number) {
@@ -43,7 +41,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
     // Start the animation loop
     const rafId = requestAnimationFrame(raf);
 
-    // Make sure ScrollTrigger works with Lenis
+    // Configure ScrollTrigger to work with Lenis
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
         if (arguments.length && typeof value === 'number') {
@@ -58,26 +56,39 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
           width: window.innerWidth,
           height: window.innerHeight
         };
-      }
+      },
+      pinType: document.body.style.transform ? "transform" : "fixed"
     });
 
     // Refresh ScrollTrigger after setup
+    ScrollTrigger.addEventListener("refresh", () => lenis.resize());
     ScrollTrigger.refresh();
 
-    // Handle route changes - scroll to top smoothly
+    // Handle route changes - smooth scroll to top
     const handleRouteChange = () => {
       lenis.scrollTo(0, { 
-        duration: 1.5,
-        easing: (t) => 1 - Math.pow(1 - t, 3)
+        duration: 0.8,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
     };
 
     // Listen for navigation changes
     window.addEventListener('popstate', handleRouteChange);
 
+    // Better mobile handling
+    const preventZoom = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+    
+    document.addEventListener('touchstart', preventZoom, { passive: false });
+
     // Cleanup function
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
+      document.removeEventListener('touchstart', preventZoom);
+      ScrollTrigger.removeEventListener("refresh", () => lenis.resize());
       cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;

@@ -158,57 +158,59 @@ const Homepage: React.FC = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white overflow-hidden pt-24">
+      <section ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white overflow-hidden pt-48">
         <ThreeBackground />
         <div className="absolute inset-0 bg-black/20" />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <h1 ref={titleRef} className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text text-transparent">
-                Supply Chain
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                2.0
-              </span>
-            </h1>
-            
-            <p ref={subtitleRef} className="text-2xl md:text-3xl mb-12 text-blue-100 max-w-4xl mx-auto leading-relaxed">
-              AI-powered platform transforming inventory, logistics, and delivery for the 
-              <span className="text-cyan-300 font-semibold"> future of retail</span>
-            </p>
-            
-            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link
-                to="/dashboard"
-                className="group relative px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl text-xl font-bold hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-cyan-500/25"
-              >
-                <span className="relative z-10 flex items-center">
-                  Explore Dashboard
-                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 mt-24" style={{ marginTop: '200px' }}>
+          <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <h1 ref={titleRef} className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
+                <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text text-transparent">
+                  Supply Chain
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </Link>
+                <br />
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  2.0
+                </span>
+              </h1>
               
-              <Link
-                to="/about"
-                className="px-10 py-5 border-2 border-white/30 text-white rounded-2xl text-xl font-bold hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-              >
-                Learn More
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+              <p ref={subtitleRef} className="text-2xl md:text-3xl mb-12 text-blue-100 max-w-4xl mx-auto leading-relaxed">
+                AI-powered platform transforming inventory, logistics, and delivery for the 
+                <span className="text-cyan-300 font-semibold"> future of retail</span>
+              </p>
+              
+              <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Link
+                  to="/dashboard"
+                  className="group relative px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-2xl text-xl font-bold hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-cyan-500/25"
+                >
+                  <span className="relative z-10 flex items-center">
+                    Explore Dashboard
+                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Link>
+                
+                <Link
+                  to="/about"
+                  className="px-10 py-5 border-2 border-white/30 text-white rounded-2xl text-xl font-bold hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </motion.div>
+          </div>
 
-        {/* Floating scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
+          {/* Floating scroll indicator */}
+          <div className="flex justify-center mt-20">
+            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center animate-bounce">
+              <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
+            </div>
           </div>
         </div>
       </section>
