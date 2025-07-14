@@ -35,51 +35,89 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animated background elements
+      // Enhanced animated background elements
       if (bgRef.current) {
         const circles = bgRef.current.querySelectorAll('.floating-circle');
         circles.forEach((circle, index) => {
           gsap.to(circle, {
-            y: "random(-50, 50)",
-            x: "random(-30, 30)",
+            y: "random(-80, 80)",
+            x: "random(-40, 40)",
             rotation: 360,
-            duration: "random(15, 25)",
+            duration: "random(12, 20)",
             repeat: -1,
             yoyo: true,
-            ease: "none",
-            delay: index * 0.3
+            ease: "sine.inOut",
+            delay: index * 0.2
           });
         });
       }
 
-      // Header animation
+      // Enhanced header animation
       gsap.from(headerRef.current, {
-        y: -50,
+        y: -80,
         opacity: 0,
-        duration: 1,
+        duration: 1.2,
         ease: "power3.out"
       });
 
-      // Grid items stagger animation
+      // Enhanced grid items stagger animation with better ScrollTrigger
       if (gridRef.current) {
         const gridItems = gridRef.current.children;
-        gsap.fromTo(gridItems, 
-          { y: 100, opacity: 0, scale: 0.9 },
-          { 
-            y: 0, 
-            opacity: 1, 
-            scale: 1,
-            duration: 0.8, 
-            stagger: 0.15, 
-            ease: "power3.out",
-            delay: 0.3,
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse"
+        
+        // Create a more sophisticated stagger animation
+        gsap.set(gridItems, { y: 120, opacity: 0, scale: 0.8, rotationX: 45 });
+        
+        gsap.to(gridItems, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotationX: 0,
+          duration: 1.2,
+          stagger: {
+            amount: 1.5,
+            from: "start",
+            ease: "power2.out"
+          },
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse",
+            onEnter: () => {
+              // Additional entrance effects
+              gsap.to(gridItems, {
+                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+              });
             }
           }
-        );
+        });
+
+        // Individual hover animations for grid items
+        Array.from(gridItems).forEach((item) => {
+          const element = item as HTMLElement;
+          
+          element.addEventListener('mouseenter', () => {
+            gsap.to(element, {
+              y: -10,
+              scale: 1.02,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          });
+          
+          element.addEventListener('mouseleave', () => {
+            gsap.to(element, {
+              y: 0,
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          });
+        });
       }
     });
 
@@ -202,19 +240,31 @@ const Dashboard: React.FC = () => {
 
   const DashboardSection = ({ section, index }: { section: any; index: number }) => {
     const Component = section.component;
+    const [ref, inView] = useInView({
+      threshold: 0.1,
+      triggerOnce: true
+    });
     
     return (
       <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: (index % 2) * 0.2 }}
-        viewport={{ once: true }}
+        ref={ref}
+        initial={{ opacity: 0, y: 100, scale: 0.8 }}
+        animate={inView ? { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          transition: {
+            duration: 0.8,
+            delay: index * 0.15,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }
+        } : { opacity: 0, y: 100, scale: 0.8 }}
         className="group"
       >
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 group-hover:border-blue-200 group-hover:scale-105">
-          <div className="p-6 bg-gradient-to-r from-gray-50 via-blue-50 to-indigo-50 border-b border-gray-100">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 group-hover:border-blue-200 group-hover:scale-105 overflow-hidden">
+          <div className="p-6 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 border-b border-gray-100/50">
             <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl text-white group-hover:scale-110 transition-transform duration-300 shadow-lg group-hover:shadow-blue-500/25">
                 {section.icon}
               </div>
               <div>
@@ -234,31 +284,41 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Animated Background */}
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-100 to-purple-100">
+      {/* Enhanced Animated Background */}
       <div ref={bgRef} className="fixed inset-0 -z-10 pointer-events-none">
-        {/* Animated Circles */}
-        {[...Array(12)].map((_, i) => (
+        {/* Multi-layer Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-indigo-200 to-purple-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-100/80 via-transparent to-pink-100/60" />
+        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-blue-200/40 to-indigo-300/30" />
+        
+        {/* Enhanced Animated Circles */}
+        {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="floating-circle absolute rounded-full opacity-5"
+            className="floating-circle absolute rounded-full opacity-8"
             style={{
-              width: `${Math.random() * 150 + 80}px`,
-              height: `${Math.random() * 150 + 80}px`,
-              background: `linear-gradient(45deg, ${['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'][Math.floor(Math.random() * 5)]}, transparent)`,
+              width: `${Math.random() * 200 + 80}px`,
+              height: `${Math.random() * 200 + 80}px`,
+              background: `linear-gradient(45deg, ${['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#06b6d4'][Math.floor(Math.random() * 6)]}, transparent)`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              filter: 'blur(1px)'
+              filter: 'blur(2px)'
             }}
           />
         ))}
         
-        {/* Geometric Patterns */}
-        <div className="absolute inset-0 opacity-3">
-          <div className="absolute top-32 left-32 w-20 h-20 border border-blue-400 rotate-45 animate-spin-slow" />
-          <div className="absolute top-64 right-64 w-24 h-24 border border-purple-400 rotate-12 animate-pulse" />
-          <div className="absolute bottom-48 left-1/4 w-22 h-22 border border-indigo-400 rotate-45 animate-bounce-slow" />
+        {/* Enhanced Geometric Patterns */}
+        <div className="absolute inset-0 opacity-4">
+          <div className="absolute top-32 left-32 w-20 h-20 border-2 border-blue-400 rotate-45 animate-spin-slow" />
+          <div className="absolute top-64 right-64 w-24 h-24 border-2 border-purple-400 rotate-12 animate-pulse" />
+          <div className="absolute bottom-48 left-1/4 w-22 h-22 border-2 border-indigo-400 rotate-45 animate-bounce-slow" />
+          <div className="absolute top-1/3 right-1/4 w-28 h-28 border-2 border-cyan-400 rotate-12 animate-spin-slow" />
+          <div className="absolute bottom-1/3 left-1/3 w-32 h-32 border-2 border-pink-400 rotate-45 animate-pulse" />
         </div>
+        
+        {/* Subtle overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/10" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-48 pb-12" style={{ marginTop: '120px' }}>

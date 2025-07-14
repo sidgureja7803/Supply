@@ -158,11 +158,23 @@ const Homepage: React.FC = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white overflow-hidden pt-48">
-        <ThreeBackground />
-        <div className="absolute inset-0 bg-black/20" />
+      <section ref={heroRef} className="relative min-h-screen overflow-hidden pt-48">
+        {/* Enhanced Multi-layer Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-800/70 via-transparent to-purple-800/60" />
+        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-indigo-800/50 to-cyan-900/40" />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 mt-24" style={{ marginTop: '200px' }}>
+        <ThreeBackground />
+        <div className="absolute inset-0 bg-black/30" />
+        
+        {/* Additional animated elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-32 h-32 border-2 border-cyan-400 rotate-45 animate-spin-slow" />
+          <div className="absolute top-1/3 right-1/4 w-24 h-24 border-2 border-blue-400 rotate-12 animate-pulse" />
+          <div className="absolute bottom-1/4 left-1/3 w-28 h-28 border-2 border-indigo-400 rotate-45 animate-bounce-slow" />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 mt-24 text-white" style={{ marginTop: '200px' }}>
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0 }}
