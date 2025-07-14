@@ -252,41 +252,42 @@ const About: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Enhanced Animated Background */}
-      <div ref={bgRef} className="fixed inset-0 -z-10">
-        {/* Dynamic Multi-layer Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/80 via-transparent to-purple-900/80" />
-        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-indigo-900/60 to-pink-900/40" />
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
+      {/* SUPER AGGRESSIVE Animated Background */}
+      <div ref={bgRef} className="absolute inset-0 z-0">
+        {/* STRONG Multi-layer Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-indigo-800 to-pink-800" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-700 via-purple-600/90 to-indigo-700" />
+        <div className="absolute inset-0 bg-gradient-to-bl from-pink-700/80 via-purple-700/70 to-blue-800/60" />
         
-        {/* Animated Circles */}
-        {[...Array(20)].map((_, i) => (
+        {/* SUPER VISIBLE Animated Circles */}
+        {[...Array(25)].map((_, i) => (
           <div
             key={i}
-            className="floating-circle absolute rounded-full opacity-10"
+            className="floating-circle absolute rounded-full opacity-30"
             style={{
-              width: `${Math.random() * 300 + 50}px`,
-              height: `${Math.random() * 300 + 50}px`,
-              background: `linear-gradient(45deg, ${['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#ef4444'][Math.floor(Math.random() * 6)]}, transparent)`,
+              width: `${Math.random() * 400 + 100}px`,
+              height: `${Math.random() * 400 + 100}px`,
+              background: `radial-gradient(circle, ${['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#8b5cf6'][Math.floor(Math.random() * 8)]}, transparent)`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              filter: 'blur(1px)'
+              filter: 'blur(3px)'
             }}
           />
         ))}
         
-        {/* Enhanced Geometric Patterns */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-32 h-32 border-2 border-cyan-400 rotate-45 animate-spin-slow" />
-          <div className="absolute top-40 right-40 w-24 h-24 border-2 border-pink-400 rotate-12 animate-pulse" />
-          <div className="absolute bottom-32 left-1/3 w-40 h-40 border-2 border-indigo-400 rotate-45 animate-bounce-slow" />
-          <div className="absolute top-1/2 left-1/4 w-28 h-28 border-2 border-purple-400 rotate-12 animate-spin-slow" />
-          <div className="absolute bottom-1/4 right-1/3 w-36 h-36 border-2 border-blue-400 rotate-45 animate-pulse" />
+        {/* SUPER ENHANCED Geometric Patterns */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-40 h-40 border-4 border-cyan-300 rotate-45 animate-spin-slow" />
+          <div className="absolute top-40 right-40 w-32 h-32 border-4 border-pink-300 rotate-12 animate-pulse" />
+          <div className="absolute bottom-32 left-1/3 w-48 h-48 border-4 border-indigo-300 rotate-45 animate-bounce-slow" />
+          <div className="absolute top-1/2 left-1/4 w-36 h-36 border-4 border-purple-300 rotate-12 animate-spin-slow" />
+          <div className="absolute bottom-1/4 right-1/3 w-44 h-44 border-4 border-blue-300 rotate-45 animate-pulse" />
+          <div className="absolute top-1/4 right-1/2 w-28 h-28 border-4 border-green-300 rotate-12 animate-bounce-slow" />
         </div>
         
-        {/* Enhanced overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-48 pb-12" style={{ marginTop: '120px' }}>
